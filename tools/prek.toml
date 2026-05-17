@@ -1,0 +1,35 @@
+[[repos]]
+repo = "builtin"
+hooks = [
+    { id = "check-json" },
+    { id = "check-toml" },
+    { id = "check-yaml" },
+    { id = "end-of-file-fixer" },
+    { id = "trailing-whitespace" },
+]
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "alejandra"
+name = "alejandra"
+language = "system"
+entry = "alejandra"
+types = ["nix"]
+
+[[repos.hooks]]
+id = "prettier"
+name = "prettier"
+language = "system"
+entry = "bunx prettier --config tools/prettier.config.ts --write --ignore-unknown"
+types_or = ["javascript", "ts", "svelte", "css", "html", "json", "markdown"]
+exclude = "^src/lib/components/ui/"
+
+[[repos.hooks]]
+id = "eslint"
+name = "eslint"
+language = "system"
+entry = "bunx eslint --config tools/eslint.config.ts --fix"
+types_or = ["javascript", "ts", "svelte"]
+exclude = "^src/lib/components/ui/"
