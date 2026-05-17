@@ -6,6 +6,8 @@ export default defineConfig({
 	srcDir: 'src',
 	modules: ['@wxt-dev/module-svelte', '@wxt-dev/auto-icons'],
 	manifest: {
+		name: 'Amazon Desponsor',
+		short_name: 'Desponsor',
 		permissions: ['storage']
 	},
 	autoIcons: {

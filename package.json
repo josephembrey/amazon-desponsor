@@ -1,9 +1,15 @@
 {
 	"name": "amazon-desponsor",
-	"description": "Removes sponsored products from Amazon search results",
+	"description": "Hide or highlight sponsored products in Amazon search results.",
 	"private": true,
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"type": "module",
+	"author": "Joseph Embrey <git@josephembrey.com>",
+	"homepage": "https://git.josephembrey.com/josephembrey/amazon-desponsor",
+	"repository": {
+		"type": "git",
+		"url": "ssh://forgejo@ssh.git.josephembrey.com/josephembrey/amazon-desponsor.git"
+	},
 	"scripts": {
 		"dev": "wxt",
 		"dev:firefox": "wxt -b firefox",
