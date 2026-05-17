@@ -88,9 +88,16 @@ export default defineContentScript({
 			});
 		}
 
+		function reportCount(n: number) {
+			browser.runtime.sendMessage({ type: 'desponsor:count', count: n }).catch(() => {});
+		}
+
 		function applyTreatments() {
 			clearTreatments();
-			if (mode === 'disabled') return;
+			if (mode === 'disabled') {
+				reportCount(0);
+				return;
+			}
 
 			const tiles = new Set<HTMLElement>();
 			document.querySelectorAll(SPONSORED_SELECTORS).forEach((el) => {
@@ -106,6 +113,8 @@ export default defineContentScript({
 					getTintTarget(tile).style.backgroundColor = `${highlightColor}33`;
 				}
 			}
+
+			reportCount(tiles.size);
 		}
 
 		Promise.all([modeItem.getValue(), highlightColorItem.getValue()]).then(([m, c]) => {
@@ -134,6 +143,7 @@ export default defineContentScript({
 			observer.disconnect();
 			styleEl.remove();
 			if (debounceTimer != null) clearTimeout(debounceTimer);
+			reportCount(0);
 		});
 	}
 });
