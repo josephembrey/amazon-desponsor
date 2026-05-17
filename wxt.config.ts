@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
 	srcDir: 'src',
 	modules: ['@wxt-dev/module-svelte', '@wxt-dev/auto-icons'],
+	manifest: {
+		permissions: ['storage']
+	},
 	autoIcons: {
 		baseIconPath: 'assets/icon.svg'
 	},

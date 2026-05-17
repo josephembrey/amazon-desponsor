@@ -6,11 +6,7 @@
 	import EyeOff from '@lucide/svelte/icons/eye-off';
 	import Package from '@lucide/svelte/icons/package';
 	import Star from '@lucide/svelte/icons/star';
-
-	type Mode = 'hide' | 'highlight' | 'disabled';
-
-	let mode = $state<Mode>('hide');
-	let highlightColor = $state('#fde047');
+	import { settings } from '@/lib/settings.svelte';
 </script>
 
 <main class="flex w-[340px] flex-col gap-4 p-4">
@@ -21,14 +17,19 @@
 
 	<div class="flex flex-col gap-2">
 		<Label>Mode</Label>
-		<ToggleGroup.Root type="single" variant="outline" bind:value={mode as never} class="w-full">
+		<ToggleGroup.Root
+			type="single"
+			variant="outline"
+			bind:value={settings.mode as never}
+			class="w-full"
+		>
 			<ToggleGroup.Item value="hide" class="flex-1">Hide</ToggleGroup.Item>
 			<ToggleGroup.Item value="highlight" class="flex-1">Highlight</ToggleGroup.Item>
 			<ToggleGroup.Item value="disabled" class="flex-1">Off</ToggleGroup.Item>
 		</ToggleGroup.Root>
 	</div>
 
-	{#if mode === 'highlight'}
+	{#if settings.mode === 'highlight'}
 		<Separator />
 
 		<div class="flex flex-col gap-2">
@@ -39,10 +40,15 @@
 			>
 				<span
 					class="size-6 rounded-md border border-input shadow-sm"
-					style="background-color: {highlightColor}"
+					style="background-color: {settings.highlightColor}"
 				></span>
-				<span class="font-mono text-sm uppercase">{highlightColor}</span>
-				<input id="highlight-color" type="color" bind:value={highlightColor} class="sr-only" />
+				<span class="font-mono text-sm uppercase">{settings.highlightColor}</span>
+				<input
+					id="highlight-color"
+					type="color"
+					bind:value={settings.highlightColor}
+					class="sr-only"
+				/>
 			</label>
 		</div>
 	{/if}
@@ -52,21 +58,21 @@
 	<div class="flex flex-col gap-2">
 		<Label>Preview</Label>
 		<Card.Root
-			class={mode === 'hide' ? 'border-dashed' : ''}
-			style={mode === 'highlight'
-				? `background-color: ${highlightColor}33; border-color: ${highlightColor}`
+			class={settings.mode === 'hide' ? 'border-dashed' : ''}
+			style={settings.mode === 'highlight'
+				? `background-color: ${settings.highlightColor}33; border-color: ${settings.highlightColor}`
 				: ''}
 		>
 			<div class="flex items-start gap-3 px-6">
 				<div class="flex size-16 shrink-0 items-center justify-center rounded-md bg-muted">
-					{#if mode === 'hide'}
+					{#if settings.mode === 'hide'}
 						<EyeOff class="size-6 text-muted-foreground/60" />
 					{:else}
 						<Package class="size-8 text-muted-foreground/60" />
 					{/if}
 				</div>
 				<div class="flex flex-1 flex-col">
-					{#if mode === 'hide'}
+					{#if settings.mode === 'hide'}
 						<Card.Title class="text-sm font-medium text-muted-foreground"
 							>Sponsored results hidden</Card.Title
 						>
@@ -82,11 +88,13 @@
 						</Card.Title>
 						<div class="mt-1 flex items-center gap-1.5">
 							<div class="flex items-center">
-								<Star class="size-3 fill-amber-400 stroke-amber-400" />
-								<Star class="size-3 fill-amber-400 stroke-amber-400" />
-								<Star class="size-3 fill-amber-400 stroke-amber-400" />
-								<Star class="size-3 fill-amber-400 stroke-amber-400" />
-								<Star class="size-3 stroke-amber-400/40" />
+								{#each [0, 1, 2, 3, 4] as i (i)}
+									<Star
+										class="size-3 {i < 4
+											? 'fill-amber-400 stroke-amber-400'
+											: 'stroke-amber-400/40'}"
+									/>
+								{/each}
 							</div>
 							<span class="text-xs text-muted-foreground">(1,234)</span>
 						</div>
