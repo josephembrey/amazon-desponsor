@@ -42,7 +42,8 @@ const SPONSORED_SELECTORS = [
 	'.s-sponsored-header', // legacy section header for sponsored result groups
 	'.puis-sponsored-label-text', // sponsored brand video (SBV) single-product banner
 	'[data-ad-feedback-payload]', // sponsored brand themed-collection (SBTC) multi-product banner
-	'.AdHolder' // iframed sidebar/skyscraper ad placements (class is on .s-result-item itself)
+	'.AdHolder', // iframed sidebar/skyscraper ad placements (class is on .s-result-item itself)
+	'.s-widget-sponsored-label-text' // section-level "Sponsored" link on carousels like "Customers frequently viewed"
 ].join(', ');
 
 // Top-level tile each sponsored indicator belongs to; the unit we hide/highlight.
@@ -93,11 +94,17 @@ export default defineContentScript({
 		document.head.appendChild(styleEl);
 
 		// Tinting the .s-result-item itself bleeds into neighboring tiles because
-		// grid margins overlap. We tint an inner card instead. Falls back to the
-		// tile when no card wrapper exists (e.g. the SBTC banner uses a hashed
-		// class container we can't reliably target — tinting the outer tile is
-		// acceptable there since the banner spans the full row).
+		// grid margins overlap. We tint an inner card instead. Two exceptions
+		// fall back to the outer tile:
+		//   1. Section containers that hold nested tiles (e.g. "Customers
+		//      frequently viewed" carousel) — querySelector(CARD_SELECTORS)
+		//      would otherwise dive into the first child product's card and
+		//      tint only that one. Detect by presence of a nested .s-result-item.
+		//   2. Tiles with no recognized card wrapper at all (e.g. the SBTC
+		//      banner uses a hashed-class container we can't reliably target,
+		//      and tinting the outer tile is acceptable for full-row banners).
 		function getTintTarget(tile: HTMLElement): HTMLElement {
+			if (tile.querySelector(TILE_SELECTOR)) return tile;
 			return tile.querySelector<HTMLElement>(CARD_SELECTORS) ?? tile;
 		}
 
