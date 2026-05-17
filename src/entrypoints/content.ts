@@ -41,7 +41,8 @@ const SPONSORED_SELECTORS = [
 	'[aria-label="View Sponsored information"]', // alternate aria-labelled version of the same badge
 	'.s-sponsored-header', // legacy section header for sponsored result groups
 	'.puis-sponsored-label-text', // sponsored brand video (SBV) single-product banner
-	'[data-ad-feedback-payload]' // sponsored brand themed-collection (SBTC) multi-product banner
+	'[data-ad-feedback-payload]', // sponsored brand themed-collection (SBTC) multi-product banner
+	'.AdHolder' // iframed sidebar/skyscraper ad placements (class is on .s-result-item itself)
 ].join(', ');
 
 // Top-level tile each sponsored indicator belongs to; the unit we hide/highlight.
