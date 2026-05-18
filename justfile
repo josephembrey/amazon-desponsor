@@ -2,9 +2,10 @@
 default:
     @just --list
 
-# Builds the extension
+# Builds and zips the extension for Chrome and Firefox (MV3); also produces the Firefox sources zip for AMO submission
 build:
-    bun run build
+    bun run zip
+    bun run zip:firefox
 
 # Runs checks on the extension
 check:

@@ -5,6 +5,7 @@
 	"version": "0.1.0",
 	"type": "module",
 	"author": "Joseph Embrey <git@josephembrey.com>",
+	"license": "MIT",
 	"homepage": "https://git.josephembrey.com/josephembrey/amazon-desponsor",
 	"repository": {
 		"type": "git",
@@ -12,11 +13,11 @@
 	},
 	"scripts": {
 		"dev": "wxt",
-		"dev:firefox": "wxt -b firefox",
+		"dev:firefox": "wxt -b firefox --mv3",
 		"build": "wxt build",
-		"build:firefox": "wxt build -b firefox",
+		"build:firefox": "wxt build -b firefox --mv3",
 		"zip": "wxt zip",
-		"zip:firefox": "wxt zip -b firefox",
+		"zip:firefox": "wxt zip -b firefox --mv3 --sources",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"clean": "rm -rf .output .wxt",
 		"postinstall": "wxt prepare"
