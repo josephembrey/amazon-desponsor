@@ -12,13 +12,13 @@
 
 export type Mode = 'hide' | 'highlight' | 'disabled';
 
-export const defaultMode: Mode = 'hide';
+export const defaultMode: Mode = 'highlight';
 export const modeItem = storage.defineItem<Mode>('local:mode', { fallback: defaultMode });
 let mode = $state<Mode>(defaultMode);
 modeItem.getValue().then((v) => (mode = v));
 modeItem.watch((v) => (mode = v));
 
-export const defaultHighlightColor = '#fde047';
+export const defaultHighlightColor = '#fbbf24';
 export const highlightColorItem = storage.defineItem<string>('local:highlightColor', {
 	fallback: defaultHighlightColor
 });
