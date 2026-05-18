@@ -11,7 +11,7 @@ export default defineConfig({
 		permissions: ['storage']
 	},
 	autoIcons: {
-		baseIconPath: 'assets/icon.svg'
+		baseIconPath: 'assets/icon.png'
 	},
 	vite: () => ({
 		plugins: [tailwindcss()]
